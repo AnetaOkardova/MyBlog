@@ -1,0 +1,25 @@
+﻿@model MyBlog.Models.Blog
+
+
+
+
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+</head>
+<body>
+    <h1>Hello from my Blog</h1>
+    <h1>@Model.Title</h1>
+    <h6>Date: @Model.EntryDate</h6>
+    <br />
+    <h4>Travel date: @Model.TravelDate</h4>
+    @foreach (var photo in Model.ImageURLs)
+    {
+        <img src = photo alt="Img of Rome" />
+    }
+    <h2>Description</h2>
+    <p>@Model.Description</p>
+
+</body>
+</html>
