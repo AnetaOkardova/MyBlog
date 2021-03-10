@@ -9,11 +9,11 @@ namespace MyBlog.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
+        public string Author { get; set; }
         public DateTime EntryDate { get; set; }
         public DateTime TravelDate { get; set; }
-        public List<string> ImageURLs { get; set; }
-        public string Description { get; set; }
-        
-
+        public string ImageURL { get; set; }
+        public string ShortDescription { get; set; }
+        public string Text { get; set; }
     }
 }

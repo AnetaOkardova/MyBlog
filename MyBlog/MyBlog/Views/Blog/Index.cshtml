@@ -1,4 +1,4 @@
-﻿@model MyBlog.Models.Blog
+﻿@model List<MyBlog.Models.Blog>
 
 
 
@@ -9,17 +9,19 @@
     <title></title>
 </head>
 <body>
-    <h1>Hello from my Blog</h1>
-    <h1>@Model.Title</h1>
-    <h6>Date: @Model.EntryDate</h6>
-    <br />
-    <h4>Travel date: @Model.TravelDate</h4>
-    @foreach (var photo in Model.ImageURLs)
+    <h1 style="text-align: center">Travel Blog</h1>
+
+    @foreach (var blog in @Model)
     {
-        <img src = photo alt="Img of Rome" />
+        <h1 style="color: darkmagenta">@blog.Title</h1>
+        <h3>By @blog.Author</h3>
+        <h2>Description: @blog.ShortDescription</h2>
+        <img style="width: 50%; height: 400px" src=@blog.ImageURL . alt="Alternative image" />
+        <h4>This trip was realized on @blog.TravelDate</h4>
+        <p style="text-align:justify">@blog.Text</p>
+        <h6>Published on: @blog.EntryDate</h6>
+        <div style="width: 100%; border-bottom: solid black 1px"></div>
     }
-    <h2>Description</h2>
-    <p>@Model.Description</p>
 
 </body>
 </html>
