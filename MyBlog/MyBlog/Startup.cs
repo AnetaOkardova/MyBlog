@@ -50,7 +50,7 @@ namespace MyBlog
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Blog}/{action=Index}/{id?}");
+                    pattern: "{controller=Blog}/{action=Overview}/{id?}");
             });
         }
     }

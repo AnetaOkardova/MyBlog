@@ -1,0 +1,12 @@
+﻿@model MyBlog.Models.Blog
+
+@{
+    ViewBag.Title = "Post details";
+}
+
+<h1>@Model.Title</h1>
+<h2>Author: @Model.Author</h2>
+<p>Published on: @Model.EntryDate.</p>
+<img style="width: 200px; height:200px" src="@Model.ImageURL" alt="Alternate Text" />
+<p>This trip was realized on @Model.TravelDate.</p>
+<p>@Model.Text.</p>
