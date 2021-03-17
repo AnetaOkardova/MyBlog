@@ -29,10 +29,9 @@ namespace MyBlog
         {
             services.AddControllersWithViews();
             services.AddTransient<IBlogService, BlogService>();
-            services.AddTransient<IBlogsRepository, BlogsRepository>();
+            //services.AddTransient<IBlogsRepository, BlogsRepository>();
             //services.AddTransient<IBlogsRepository, BlogFileRepository>();
-
-
+            services.AddTransient<IBlogsRepository, BlogSqlRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
