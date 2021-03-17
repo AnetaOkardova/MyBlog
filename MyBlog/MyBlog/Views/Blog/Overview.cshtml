@@ -1,4 +1,6 @@
-﻿@model List<MyBlog.Models.Blog>
+﻿@addTagHelper *,Microsoft.AspNetCore.Mvc.TagHelpers
+
+@model List<MyBlog.Models.Blog>
 
 @{
     ViewBag.Title = "Overview";
@@ -17,7 +19,7 @@
                     <h6 class="card-title">Author: @blog.Author</h6>
                     <p class="card-text">@blog.ShortDescription</p>
                     <p>Published on: @blog.EntryDate</p>
-                    <a href="/Blog/Details/@blog.Id" class="btn btn-success">See description</a>
+                    <a asp-controller="Blog" asp-action="Details" asp-route-id="@blog.Id" class="btn btn-success">See description</a>
                 </div>
             </div>
         </div>

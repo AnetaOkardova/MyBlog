@@ -1,11 +1,12 @@
 ﻿using MyBlog.Models;
+using MyBlog.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace MyBlog.Repository
 {
-    public class BlogsRepository
+    public class BlogsRepository : IBlogsRepository
     {
         private List<Blog> _blogs { get; set; }
         public BlogsRepository()
@@ -52,6 +53,23 @@ namespace MyBlog.Repository
         public Blog GetById(int id)
         {
             return _blogs.FirstOrDefault(x => x.Id == id);
+        }
+
+        public void Add(Blog blog)
+        {
+            blog.Id = GenerateId();
+            blog.EntryDate = DateTime.Now;
+            _blogs.Add(blog);
+        }
+
+        private int GenerateId()
+        {
+            var maxId = 0;
+            if (_blogs.Any())
+            {
+                maxId = _blogs.Max(x => x.Id);
+            }
+            return maxId + 1;
         }
     }
 }

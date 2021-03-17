@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyBlog.Models;
 using MyBlog.Services;
+using MyBlog.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,10 +10,10 @@ namespace MyBlog.Controllers
 {
     public class BlogController : Controller
     {
-        private BlogService _service { get; set; }
-        public BlogController()
+        private IBlogService _service { get; set; }
+        public BlogController(IBlogService service)
         {
-            _service = new BlogService();
+            _service = service;
         }
         public IActionResult Details(int id)
         {
@@ -27,6 +28,21 @@ namespace MyBlog.Controllers
         {
             var blogs = _service.GetAllBlogs();
             return View(blogs);
+        }
+        [HttpGet]
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Create(Blog blog)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.CreateBlog(blog);
+                return RedirectToAction("Overview");
+            }
+            return View(blog);
         }
     }
 }

@@ -1,15 +1,17 @@
 ﻿using MyBlog.Models;
 using MyBlog.Repository;
+using MyBlog.Repository.Interfaces;
+using MyBlog.Services.Interfaces;
 using System.Collections.Generic;
 
 namespace MyBlog.Services
 {
-    public class BlogService
+    public class BlogService : IBlogService
     {
-        public BlogsRepository _blogsRepository { get; set; }
-        public BlogService()
+        public IBlogsRepository _blogsRepository { get; set; }
+        public BlogService(IBlogsRepository blogsRepository)
         {
-            _blogsRepository = new BlogsRepository();
+            _blogsRepository = blogsRepository;
         }
         public List<Blog> GetAllBlogs()
         {
@@ -18,6 +20,10 @@ namespace MyBlog.Services
         public Blog GetBlogById(int id)
         {
             return _blogsRepository.GetById(id);
+        }
+        public void CreateBlog(Blog blog)
+        {
+            _blogsRepository.Add(blog);
         }
     }
 }
