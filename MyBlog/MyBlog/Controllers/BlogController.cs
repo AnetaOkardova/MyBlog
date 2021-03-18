@@ -24,9 +24,9 @@ namespace MyBlog.Controllers
             }
             return View(selectedBlog);
         }
-        public IActionResult Overview()
+        public IActionResult Overview(string title)
         {
-            var blogs = _service.GetAllBlogs();
+            var blogs = _service.GetBlogsByTitle(title);
             return View(blogs);
         }
         [HttpGet]

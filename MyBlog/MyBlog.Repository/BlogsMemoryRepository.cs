@@ -6,10 +6,10 @@ using System.Linq;
 
 namespace MyBlog.Repository
 {
-    public class BlogsRepository : IBlogsRepository
+    public class BlogsMemoryRepository : IBlogsRepository
     {
         private List<Blog> _blogs { get; set; }
-        public BlogsRepository()
+        public BlogsMemoryRepository()
         {
             var blog1 = new Blog()
             {
@@ -70,6 +70,11 @@ namespace MyBlog.Repository
                 maxId = _blogs.Max(x => x.Id);
             }
             return maxId + 1;
+        }
+
+        public List<Blog> GetByTitle(string title)
+        {
+            throw new NotImplementedException();
         }
     }
 }

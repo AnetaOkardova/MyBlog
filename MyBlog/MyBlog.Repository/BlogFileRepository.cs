@@ -56,5 +56,10 @@ namespace MyBlog.Repository
             var serilized = JsonConvert.SerializeObject(Blogs);
             File.WriteAllText(Path, serilized);
         }
+
+        public List<Blog> GetByTitle(string title)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -29,7 +29,7 @@ namespace MyBlog
         {
             services.AddControllersWithViews();
             services.AddTransient<IBlogService, BlogService>();
-            //services.AddTransient<IBlogsRepository, BlogsRepository>();
+            //services.AddTransient<IBlogsRepository, BlogsMemoryRepository>();
             //services.AddTransient<IBlogsRepository, BlogFileRepository>();
             services.AddTransient<IBlogsRepository, BlogSqlRepository>();
         }

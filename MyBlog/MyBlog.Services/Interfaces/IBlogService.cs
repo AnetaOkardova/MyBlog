@@ -8,6 +8,7 @@ namespace MyBlog.Services.Interfaces
     public interface IBlogService
     {
         List<Blog> GetAllBlogs();
+        List<Blog> GetBlogsByTitle(string title);
 
         public Blog GetBlogById(int id);
         void CreateBlog(Blog blog);

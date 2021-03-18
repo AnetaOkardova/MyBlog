@@ -90,5 +90,37 @@ namespace MyBlog.Repository
                 return blog;
             }
         }
+
+        public List<Blog> GetByTitle(string title)
+        {
+            var blogs = new List<Blog>();
+            using (var cnn = new SqlConnection("Server=(localDb)\\MSSQLLocalDB;Database= MyBlogsSql; Trusted_Connection=True;"))
+            {
+                cnn.Open();
+
+                var query = "select * from blogs where title like @Title";
+                var cmd = new SqlCommand(query, cnn);
+                cmd.Parameters.AddWithValue("@Title", $"%{title}%");
+                var reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    var blog = new Blog();
+
+                    blog.Id = reader.GetInt32(0);
+                    blog.Title = reader.GetString(1);
+                    blog.Author = reader.GetString(2);
+                    blog.EntryDate = reader.GetDateTime(3);
+                    blog.TravelDate = reader.GetDateTime(4);
+                    blog.ImageURL = reader.GetString(5);
+                    blog.ShortDescription = reader.GetString(5);
+                    blog.Text = reader.GetString(5);
+
+                    blogs.Add(blog);
+                }
+
+                return blogs;
+            }
+        }
     }
 }
