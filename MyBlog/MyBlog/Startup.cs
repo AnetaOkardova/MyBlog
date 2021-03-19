@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -27,11 +28,13 @@ namespace MyBlog
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<MyBlogsDbContext>(x => x.UseSqlServer("Server=(localDb)\\MSSQLLocalDB;Database= MyBlogs; Trusted_Connection=True;"));
             services.AddControllersWithViews();
             services.AddTransient<IBlogService, BlogService>();
             //services.AddTransient<IBlogsRepository, BlogsMemoryRepository>();
             //services.AddTransient<IBlogsRepository, BlogFileRepository>();
-            services.AddTransient<IBlogsRepository, BlogSqlRepository>();
+            //services.AddTransient<IBlogsRepository, BlogSqlRepository>();
+            services.AddTransient<IBlogsRepository, BlogRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
