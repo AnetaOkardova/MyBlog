@@ -32,6 +32,11 @@ namespace MyBlog.Repository
             };
         }
 
+        public void Delete(Blog movie)
+        {
+            throw new NotImplementedException();
+        }
+
         public List<Blog> GetAll()
         {
             var blogs = new List<Blog>();
@@ -121,6 +126,11 @@ namespace MyBlog.Repository
 
                 return blogs;
             }
+        }
+
+        public void Update(Blog blog)
+        {
+            throw new NotImplementedException();
         }
     }
 }

@@ -12,5 +12,7 @@ namespace MyBlog.Repository.Interfaces
 
         Blog GetById(int id);
         void Add(Blog blog);
+        void Delete(Blog movie);
+        void Update(Blog blog);
     }
 }

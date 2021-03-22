@@ -61,5 +61,15 @@ namespace MyBlog.Repository
         {
             throw new NotImplementedException();
         }
+
+        public void Delete(Blog movie)
+        {
+            throw new NotImplementedException();
+        }
+
+        public void Update(Blog blog)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

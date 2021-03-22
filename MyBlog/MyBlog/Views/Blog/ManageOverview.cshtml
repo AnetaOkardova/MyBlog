@@ -1,0 +1,31 @@
+﻿@model List<MyBlog.Models.Blog>
+
+@{
+    ViewBag.Title = "Manage blog";
+}
+<p>
+    <a href="/Blog/Create" class="btn btn-success">Create</a>
+</p>
+
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Title</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var blog in Model)
+        {
+            <tr>
+                <td>@blog.Id</td>
+                <td>@blog.Title</td>
+                <td class="text-center">
+                    <a href="/Blog/Update/@blog.Id" class="text-primary">Modify</a> |
+                    <a href="/Blog/Delete/@blog.Id" class="text-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

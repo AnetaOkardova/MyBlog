@@ -1,4 +1,5 @@
-﻿using MyBlog.Models;
+﻿using MyBlog.Common.Exceptions;
+using MyBlog.Models;
 using MyBlog.Repository;
 using MyBlog.Repository.Interfaces;
 using MyBlog.Services.Interfaces;
@@ -35,6 +36,31 @@ namespace MyBlog.Services
             else
             {
                 return _blogsRepository.GetByTitle(title);
+            }
+        }
+
+        public void Delete(int id)
+        {
+            var movie = _blogsRepository.GetById(id);
+            if (movie == null)
+            {
+                throw new NotFoundException($"The blog with ID {id} is not found.");
+            }
+            else
+            {
+                _blogsRepository.Delete(movie);
+            }
+        }
+
+        public void Update(Blog blog)
+        {
+            if (blog == null)
+            {
+                throw new NotFoundException($"The blog with ID {blog.Id} is not found.");
+            }
+            else
+            {
+                _blogsRepository.Update(blog);
             }
         }
     }

@@ -12,5 +12,7 @@ namespace MyBlog.Services.Interfaces
 
         public Blog GetBlogById(int id);
         void CreateBlog(Blog blog);
+        void Delete(int id);
+        void Update(Blog blog);
     }
 }
