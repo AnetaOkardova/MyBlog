@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace MyBlog.Models
+namespace MyBlog.ViewModels
 {
-    public class Blog
+    public class UpdateBlogModel
     {
         public int Id { get; set; }
         [Required]
@@ -19,9 +22,5 @@ namespace MyBlog.Models
         public string ShortDescription { get; set; }
         [Required]
         public string Text { get; set; }
-        [Required]
-        public DateTime EntryDate { get; set; }
-        public DateTime DateModified { get; set; }
-
     }
 }

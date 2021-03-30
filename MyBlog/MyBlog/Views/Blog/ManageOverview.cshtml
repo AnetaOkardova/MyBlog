@@ -3,29 +3,51 @@
 @{
     ViewBag.Title = "Manage blog";
 }
-<p>
-    <a href="/Blog/Create" class="btn btn-success">Create</a>
-</p>
 
-<table class="table table-bordered table-hover">
-    <thead>
-        <tr>
-            <th>Id</th>
-            <th>Title</th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var blog in Model)
-        {
+@if (ViewBag.Message != null)
+{
+    <div class="alert alert-success m-3" role="alert" style="width:800px">
+        @ViewBag.Message
+    </div>
+}
+else
+{
+    @if (ViewBag.SuccessMessage != null)
+    {
+        <div class="alert alert-success m-3" role="alert" style="width:800px">
+            @ViewBag.SuccessMessage
+        </div>
+    }
+    @if (ViewBag.ErrorMessage != null)
+    {
+        <div class="alert alert-success m-3" role="alert" style="width:800px">
+            @ViewBag.ErrorMessage
+        </div>
+    }
+    <p>
+        <a href="/Blog/Create" class="btn btn-success">Create</a>
+    </p>
+
+    <table class="table table-bordered table-hover">
+        <thead>
             <tr>
-                <td>@blog.Id</td>
-                <td>@blog.Title</td>
-                <td class="text-center">
-                    <a href="/Blog/Update/@blog.Id" class="text-primary">Modify</a> |
-                    <a href="/Blog/Delete/@blog.Id" class="text-danger">Delete</a>
-                </td>
+                <th>Id</th>
+                <th>Title</th>
+                <th></th>
             </tr>
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var blog in Model)
+            {
+                <tr>
+                    <td>@blog.Id</td>
+                    <td>@blog.Title</td>
+                    <td class="text-center">
+                        <a href="/Blog/Update/@blog.Id" class="text-primary">Modify</a> |
+                        <a href="/Blog/Delete/@blog.Id" class="text-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using MyBlog.Common.Exceptions;
+using MyBlog.Mappings;
 using MyBlog.Models;
 using MyBlog.Services;
 using MyBlog.Services.Interfaces;
+using MyBlog.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,24 +18,43 @@ namespace MyBlog.Controllers
         {
             _service = service;
         }
-        public IActionResult Details(int id)
+        public IActionResult Overview(string title)
         {
-            var selectedBlog = _service.GetBlogById(id);
-            if (selectedBlog == null)
+            try
+            {
+                var blogs = _service.GetBlogsByTitle(title);
+                return View(blogs);
+            }
+            catch (NotFoundException ex)
+            {
+                return RedirectToAction("ActionNotSuccessful", "Info", new { Message = ex.Message });
+            }
+            catch (Exception)
             {
                 return RedirectToAction("ErrorNotFound", "Info");
             }
-            return View(selectedBlog);
         }
-        public IActionResult Overview(string title)
+        public IActionResult ManageOverview(string successMessage, string errorMessage)
         {
-            var blogs = _service.GetBlogsByTitle(title);
-            return View(blogs);
-        }
-        public IActionResult ManageOverview()
-        {
-            var blogs = _service.GetAllBlogs();
-            return View(blogs);
+            try
+            {
+                var blogs = _service.GetAllBlogs();
+                if (blogs.Count == 0)
+                {
+                    ViewBag.Message = $"There are no blogs to show at this time.";
+                }
+                ViewBag.SuccessMessage = successMessage;
+                ViewBag.ErrorMessage = errorMessage;
+                return View(blogs);
+            }
+            catch (NotFoundException ex)
+            {
+                return RedirectToAction("ActionNotSuccessful", "Info", new { Message = ex.Message });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ErrorNotFound", "Info");
+            }
         }
         [HttpGet]
         public IActionResult Create()
@@ -41,53 +62,90 @@ namespace MyBlog.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Create(Blog blog)
+        public IActionResult Create(CreateBlogModel blogModel)
         {
+            var domainModel = blogModel.ToModel();
+
             if (ModelState.IsValid)
             {
-                _service.CreateBlog(blog);
+                _service.CreateBlog(domainModel);
                 return RedirectToAction("Overview");
             }
-            return View(blog);
+            return View(blogModel);
         }
         public IActionResult Delete(int id)
         {
-            try
+            var response = _service.Delete(id);
+            if (response.Success)
             {
-                _service.Delete(id);
-                return RedirectToAction("ManageOverview");
+                return RedirectToAction("ManageOverview", new { SuccessMessage = response.Message });
             }
-            catch (NotFoundException ex)
+            else
             {
-                return RedirectToAction("ActionNotSuccessful", "Info", new { Message = ex.Message });
+                return RedirectToAction("ManageOverview", new { ErrorMessage = response.Message });
             }
 
         }
         [HttpGet]
         public IActionResult Update(int id)
         {
-            var blog = _service.GetBlogById(id);
             try
             {
-                return View(blog);
+                var blog = _service.GetBlogById(id);
+                return View(blog.ToUpdateBlogModel());
             }
             catch (NotFoundException ex)
             {
                 return RedirectToAction("ActionNotSuccessful", "Info", new { Message = ex.Message });
             }
-
+            catch (Exception)
+            {
+                return RedirectToAction("ErrorNotFound", "Info");
+            }
         }
         [HttpPost]
-        public IActionResult Update(Blog blog)
+        public IActionResult Update(UpdateBlogModel blogModel)
         {
             try
             {
-                _service.Update(blog);
-                return RedirectToAction("ManageOverview");
+                if (ModelState.IsValid)
+                {
+                    var response = _service.Update(blogModel.ToModel());
+                    if (response.Success)
+                    {
+                        return RedirectToAction("ManageOverview", new { SuccessMessage = response.Message });
+                    }
+                    else
+                    {
+                        return RedirectToAction("ManageOverview", new { ErrorMessage = response.Message });
+                    }
+                }
+
+                return View(blogModel);
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ErrorNotFound", "Info");
+            }
+        }
+        public IActionResult Details(int id)
+        {
+            try
+            {
+                var blog = _service.GetBlogById(id);
+                if (blog == null)
+                {
+                    return RedirectToAction("ErrorNotFound", "Info");
+                }
+                return View(blog.ToBlogDetailsModel());
             }
             catch (NotFoundException ex)
             {
                 return RedirectToAction("ActionNotSuccessful", "Info", new { Message = ex.Message });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("ErrorNotFound", "Info");
             }
         }
     }

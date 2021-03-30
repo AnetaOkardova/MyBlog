@@ -1,4 +1,5 @@
 ﻿using MyBlog.Models;
+using MyBlog.Services.DtoModels;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -12,7 +13,7 @@ namespace MyBlog.Services.Interfaces
 
         public Blog GetBlogById(int id);
         void CreateBlog(Blog blog);
-        void Delete(int id);
-        void Update(Blog blog);
+        StatusModel Delete(int id);
+        StatusModel Update(Blog blog);
     }
 }
