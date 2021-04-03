@@ -47,5 +47,35 @@ namespace MyBlog.Mappings
                 Text = blog.Text
             };
         }
+
+        public static User ToModel(this SignInModel signInModel)
+        {
+            return new User()
+            {
+                Username = signInModel.Username,
+                Password = signInModel.Password,
+            };
+        }
+        public static User ToModel(this SignUpModel signUpModel)
+        {
+            return new User()
+            {
+                Username = signUpModel.Username,
+                Password = signUpModel.Password,
+                Name = signUpModel.Name,
+                Lastname = signUpModel.Lastname,
+                Email = signUpModel.Email,
+                Address = signUpModel.Address,
+            };
+        }
+        public static User ToModel(this ManageOverviewUsersModel users)
+        {
+            return new User()
+            {
+                Id = users.Id,
+                Username = users.Username,
+                IsAdmin = users.IsAdmin
+            };
+        }
     }
 }

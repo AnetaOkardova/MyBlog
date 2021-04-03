@@ -7,5 +7,7 @@ namespace MyBlog.Repository.Interfaces
 {
     public interface IUsersRepository : IBaseRepository<User>
     {
+        User GetByUsername(string username);
+        bool CheckIfExists(string username, string email);
     }
 }

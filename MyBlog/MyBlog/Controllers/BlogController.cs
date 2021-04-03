@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using MyBlog.Common.Exceptions;
 using MyBlog.Mappings;
 using MyBlog.Models;
@@ -11,6 +12,7 @@ using System.Linq;
 
 namespace MyBlog.Controllers
 {
+
     public class BlogController : Controller
     {
         private IBlogService _service { get; set; }
@@ -18,6 +20,7 @@ namespace MyBlog.Controllers
         {
             _service = service;
         }
+        [AllowAnonymous]
         public IActionResult Overview(string title)
         {
             try
@@ -128,6 +131,7 @@ namespace MyBlog.Controllers
                 return RedirectToAction("ErrorNotFound", "Info");
             }
         }
+        [AllowAnonymous]
         public IActionResult Details(int id)
         {
             try

@@ -28,9 +28,34 @@
                         <li class="nav-item">
                             <a class="nav-link active" aria-current="page" href="/Info/ContactUs">Contact Us</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/Blog/ManageOverview">Modify Blog</a>
-                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            @if (Convert.ToBoolean(User.FindFirst("isAdmin").Value))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Blog/ManageOverview">Modify Blog</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" href="/Users/ManageOverview">Modify Users</a>
+                                </li>
+                            }
+
+                            <li class="nav-item">
+                                <a class="nav-link" aria-current="page" href="/Users/Details">@User.FindFirst("Username").Value</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/Auth/SignOut">Sign Out</a>
+                            </li>
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/Auth/SignIn">Sign In</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active" aria-current="page" href="/Auth/SignUp">Sign up</a>
+                            </li>
+                        }
                     </ul>
                 </div>
                 <div class="col-3">

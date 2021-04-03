@@ -4,6 +4,7 @@ using MyBlog.Repository;
 using MyBlog.Repository.Interfaces;
 using MyBlog.Services.DtoModels;
 using MyBlog.Services.Interfaces;
+using System;
 using System.Collections.Generic;
 
 namespace MyBlog.Services
@@ -11,9 +12,12 @@ namespace MyBlog.Services
     public class BlogService : IBlogService
     {
         public IBlogsRepository _blogsRepository { get; set; }
-        public BlogService(IBlogsRepository blogsRepository)
+        private readonly IUsersRepository _usersRepository;
+
+        public BlogService(IBlogsRepository blogsRepository, IUsersRepository usersRepository)
         {
             _blogsRepository = blogsRepository;
+            _usersRepository = usersRepository;
         }
 
         public List<Blog> GetAllBlogs()
@@ -89,6 +93,7 @@ namespace MyBlog.Services
                 blogToUpdate.Text = blog.Text;
                 blogToUpdate.TravelDate = blog.TravelDate;
                 blogToUpdate.Author = blog.Author;
+                blogToUpdate.DateModified = DateTime.Now;
 
                 _blogsRepository.Update(blogToUpdate);
 

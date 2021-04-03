@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,8 +30,30 @@ namespace MyBlog
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<MyBlogsDbContext>(x => x.UseSqlServer("Server=(localDb)\\MSSQLLocalDB;Database= MyBlogs; Trusted_Connection=True;"));
+
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
+                options =>
+                {
+                    options.LoginPath = "/Auth/SignIn";
+                    options.AccessDeniedPath = "/Auth/AccessDenied";
+
+                }
+                );
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("IsAdmin", policy =>
+                {
+                    policy.RequireClaim("IsAdmin", "True");
+                });
+            });
+
             services.AddControllersWithViews();
+
             services.AddTransient<IBlogService, BlogService>();
+            services.AddTransient<IAuthService, AuthService>();
+            services.AddTransient<IUsersService, UsersService>();
+            services.AddTransient<ICommentsService, CommentsService>();
+
             services.AddTransient<IBlogsRepository, BlogRepository>();
             services.AddTransient<ICommentsRepository, CommentsRepository>();
             services.AddTransient<IUsersRepository, UsersRepository>();
@@ -54,6 +77,8 @@ namespace MyBlog
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
