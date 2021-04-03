@@ -5,8 +5,7 @@ using System.Text;
 
 namespace MyBlog.Repository.Interfaces
 {
-    public interface IBlogsRepository : IBaseRepository<Blog>
+    public interface IUsersRepository : IBaseRepository<User>
     {
-        List<Blog> GetByTitle(string title);
     }
 }

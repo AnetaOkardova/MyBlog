@@ -31,10 +31,10 @@ namespace MyBlog
             services.AddDbContext<MyBlogsDbContext>(x => x.UseSqlServer("Server=(localDb)\\MSSQLLocalDB;Database= MyBlogs; Trusted_Connection=True;"));
             services.AddControllersWithViews();
             services.AddTransient<IBlogService, BlogService>();
-            //services.AddTransient<IBlogsRepository, BlogsMemoryRepository>();
-            //services.AddTransient<IBlogsRepository, BlogFileRepository>();
-            //services.AddTransient<IBlogsRepository, BlogSqlRepository>();
             services.AddTransient<IBlogsRepository, BlogRepository>();
+            services.AddTransient<ICommentsRepository, CommentsRepository>();
+            services.AddTransient<IUsersRepository, UsersRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
